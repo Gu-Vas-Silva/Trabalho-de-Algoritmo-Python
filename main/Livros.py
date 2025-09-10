@@ -25,3 +25,10 @@ class Livro:
 
     def atualizar_titulo(self, novo_titulo: str):
         self.titulo = novo_titulo
+        
+    def to_dict(self):
+        return self.__dict__
+
+    @staticmethod
+    def from_dict(dados: dict):
+        return Livro(**dados)

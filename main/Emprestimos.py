@@ -18,3 +18,10 @@ class Emprestimo:
 
     def marcar_como_devolvido(self):
         self.devolvido = True
+    
+    def to_dict(self):
+        return self.__dict__
+
+    @staticmethod
+    def from_dict(dados: dict):
+        return Emprestimo(**dados)

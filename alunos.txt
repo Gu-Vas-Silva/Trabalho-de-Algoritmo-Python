@@ -2,3 +2,4 @@
 {"codAluno": 2, "nome": "Maria", "cod_curso": 2, "cod_cidade": 1, "status": 0}
 {"codAluno": 3, "nome": "Carlos", "cod_curso": 1, "cod_cidade": 1, "status": 0}
 {"codAluno": 4, "nome": "Jorge", "cod_curso": 2, "cod_cidade": 1, "status": 0}
+

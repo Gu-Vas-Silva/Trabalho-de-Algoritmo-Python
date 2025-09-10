@@ -13,3 +13,10 @@ class Autor:
 
     def atualizar_cidade(self, novo_cod_cidade: str):
         self.cod_cidade = novo_cod_cidade
+
+    def to_dict(self):
+        return self.__dict__
+
+    @staticmethod
+    def from_dict(dados: dict):
+        return Autor(**dados)

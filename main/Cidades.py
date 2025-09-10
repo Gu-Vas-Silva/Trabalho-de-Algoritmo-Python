@@ -13,3 +13,10 @@ class Cidade:
 
     def atualizar_estado(self, novo_estado: str):
         self.estado = novo_estado
+    
+    def to_dict(self):
+        return self.__dict__
+
+    @staticmethod
+    def from_dict(dados: dict):
+        return Cidade(**dados)

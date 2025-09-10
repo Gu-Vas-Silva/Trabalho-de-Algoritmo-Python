@@ -22,5 +22,8 @@ def carregar_todos(arquivo, classe):
     objetos = []
     with open(arquivo, "r", encoding="utf-8") as f:
         for linha in f:
-            objetos.append(classe.from_dict(json.loads(linha.strip())))
+            linha = linha.strip()
+            if not linha:  # ignora linha vazia
+                continue
+            objetos.append(classe.from_dict(json.loads(linha)))
     return objetos

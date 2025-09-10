@@ -9,16 +9,27 @@ from Livros import Livro
 from dados import salvar_objeto, buscar_por_posicao, carregar_todos
 
 ARQ_ALUNOS = "alunos.txt"
+ARQ_AUTOR = "autores.txt"
+ARQ_CATEGORIA = "categorias.txt"
+ARQ_CIDADE = "cidades.txt"
+ARQ_CURSO = "cursos.txt"
+ARQ_EMPRESTIMO = "emprestimos.txt"
+ARQ_LIVRO = "livros.txt"
 
-indiceAluno = Arvore()
+indice = Arvore()
+alunos_existentes = carregar_todos(ARQ_ALUNOS, Aluno)
+for i, aluno in enumerate(alunos_existentes):
+    indice.inserir(aluno.codAluno, i)
 
-aluno3 = Aluno(3, "Carlos", 1, 1)
-aluno4 = Aluno(4, "Jorge", 2, 1)
+autores_existentes = carregar_todos(ARQ_AUTOR, Autor)
+for i, autor in enumerate(autores_existentes):
+    indice.inserir(autor.cod_autor, i)
 
-# Salvar alunos no arquivo e registrar no índice
-for aluno in [aluno3, aluno4]:
-    linha = salvar_objeto(aluno, ARQ_ALUNOS)  
-    indiceAluno.inserir(aluno.codAluno, linha)
+autor1 = Autor(1, 'Joao', 1)
+autor2 = Autor(2, 'Carlos', 2)
+for autor in [autor1, autor2]:
+    linha = salvar_objeto(autor, ARQ_AUTOR)  
+    indice.inserir(autor.cod_autor, linha)
 
-linha = indiceAluno.buscarCod(2)
-print(buscar_por_posicao(ARQ_ALUNOS, linha, Aluno))
+linha = indice.buscarCod(2)
+print(buscar_por_posicao(ARQ_AUTOR, linha, Autor))

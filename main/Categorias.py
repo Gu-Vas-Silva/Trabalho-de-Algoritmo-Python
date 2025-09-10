@@ -8,3 +8,10 @@ class Categoria:
 
     def atualizar_descricao(self, nova_descricao: str):
         self.descricao = nova_descricao
+        
+    def to_dict(self):
+        return self.__dict__
+
+    @staticmethod
+    def from_dict(dados: dict):
+        return Categoria(**dados)
