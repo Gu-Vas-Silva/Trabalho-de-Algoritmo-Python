@@ -1,0 +1,2 @@
+{"cod_livro": 1, "titulo": "Python Básico", "cod_autor": 1, "cod_categoria": 2, "ano_publicacao": 2010, "disponibilidade": true}
+{"cod_livro": 2, "titulo": "História do Brasil", "cod_autor": 2, "cod_categoria": 1, "ano_publicacao": 1999, "disponibilidade": true}

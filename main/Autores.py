@@ -1,4 +1,5 @@
 class Autor:
+    cidades_dict = {}
     def __init__(self, cod_autor: str, nome: str, cod_cidade: str):
         self.cod_autor = cod_autor
         self.nome = nome
@@ -14,6 +15,12 @@ class Autor:
     def atualizar_cidade(self, novo_cod_cidade: str):
         self.cod_cidade = novo_cod_cidade
 
+    def descricao_cidade(self):
+        cidade = self.cidades_dict.get(self.cod_cidade)
+        if cidade:
+            return f"{cidade.descricao} - {cidade.estado}"
+        return "Cidade não encontrada"
+         
     def to_dict(self):
         return self.__dict__
 

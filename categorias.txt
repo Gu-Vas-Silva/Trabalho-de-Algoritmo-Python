@@ -1,0 +1,3 @@
+{"cod_categoria": 1, "descricao": "Romance"}
+{"cod_categoria": 2, "descricao": "Terror"}
+

@@ -1,0 +1,3 @@
+{"cod_curso": 1, "descricao": "ADS"}
+{"cod_curso": 2, "descricao": "Engenharia de Software"}
+

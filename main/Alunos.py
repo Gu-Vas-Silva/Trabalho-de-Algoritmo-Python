@@ -1,11 +1,12 @@
 import json
 class Aluno:
-    def __init__(self, codAluno, nome, cod_curso, cod_cidade, status = 0):
+    cursos_dict = {}
+    cidades_dict = {}
+    def __init__(self, codAluno, nome, cod_curso, cod_cidade):
         self.codAluno = codAluno
         self.nome = nome
         self.cod_curso = cod_curso
         self.cod_cidade = cod_cidade
-        self.status = status
 
     def __str__(self):
         return (f"Aluno codAluno:'{self.codAluno}', nome:'{self.nome}', "
@@ -19,6 +20,15 @@ class Aluno:
 
     def atualizar_cidade(self, novo_cod_cidade: str):
         self.cod_cidade = novo_cod_cidade
+    
+    def curso_descricao(self):
+        return self.cursos_dict.get(self.cod_curso, "Curso não encontrado")
+     
+    def cidade_descricao(self):
+        cidade = self.cidades_dict.get(self.cod_cidade)
+        if cidade:
+            return f"{cidade.descricao} - {cidade.estado}"
+        return "Cidade não encontrada"
     
     def to_dict(self):
         return self.__dict__

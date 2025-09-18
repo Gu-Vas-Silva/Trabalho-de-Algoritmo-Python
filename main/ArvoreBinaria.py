@@ -33,7 +33,6 @@ class Arvore:
         if no is not None:
             if no.esquerda:
                 self.ordem(no.esquerda)
-            if no.valor.status == 0:
                 print(no.valor)
             if no.direita:
                 self.ordem(no.direita)
@@ -50,6 +49,24 @@ class Arvore:
         else:
             return self.buscarCod(chave, no.direita)
     
-    def excluir(self, exclusao):
-        exclusao.status = 1  
-        return exclusao
+    def reconstruir(self, arquivo, classe, carregar_todos_func):
+        self.raiz = None 
+        objetos = carregar_todos_func(arquivo, classe)
+        chave_map = {
+            "Aluno": "codAluno",
+            "Autor": "cod_autor",
+            "Categoria": "cod_categoria",
+            "Cidade": "cod_cidade",
+            "Curso": "cod_curso",
+            "Livro": "cod_livro",
+            "Emprestimo": "cod_emprestimo"
+        }
+        nome_classe = classe.__name__
+        if nome_classe not in chave_map:
+            raise ValueError(f"Classe {nome_classe} não tem chave mapeada")
+
+        atributo_chave = chave_map[nome_classe]
+
+        for i, obj in enumerate(objetos):
+            chave = getattr(obj, atributo_chave)
+            self.inserir(chave, i)

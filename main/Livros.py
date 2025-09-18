@@ -1,4 +1,6 @@
 class Livro:
+    autores_dict = {}
+    categorias_dict = {}
     def __init__(self, cod_livro: str, titulo: str, cod_autor: str, cod_categoria: str,
                  ano_publicacao: int, disponibilidade: bool = True):
         self.cod_livro = cod_livro
@@ -15,17 +17,25 @@ class Livro:
                 f"ano_publicacao={self.ano_publicacao}, disponibilidade='{status}')")
 
     def emprestar(self):
-        if self.disponibilidade:
-            self.disponibilidade = False
-            return True
-        return False
+            if self.disponibilidade is True:
+                return "disponivel"
+            return "indisponivel"
 
     def devolver(self):
         self.disponibilidade = True
 
     def atualizar_titulo(self, novo_titulo: str):
         self.titulo = novo_titulo
-        
+
+    def descricao_autores(self):
+        autor = self.autores_dict.get(self.cod_autor)
+        if autor:
+            return f"{autor.nome} ({autor.descricao_cidade()})"
+        return "autor não encontrado"
+
+    def descricao_categorias(self):
+        return self.categorias_dict.get(self.cod_categoria, "categoria não encontrada")
+    
     def to_dict(self):
         return self.__dict__
 
