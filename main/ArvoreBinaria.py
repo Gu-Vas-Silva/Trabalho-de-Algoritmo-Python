@@ -1,4 +1,3 @@
-from main.Alunos import Aluno
 class Node:
     def __init__(self, chave, valor):
         self.chave = chave
@@ -50,7 +49,6 @@ class Arvore:
         else:
             return self.buscarCod(chave, no.direita)
     
-<<<<<<< Updated upstream
     def reconstruir(self, arquivo, classe, carregar_todos_func):
         self.raiz = None 
         objetos = carregar_todos_func(arquivo, classe)
@@ -72,9 +70,3 @@ class Arvore:
         for i, obj in enumerate(objetos):
             chave = getattr(obj, atributo_chave)
             self.inserir(chave, i)
-=======
-    def excluir(self, exclusao):
-        exclusao.status = 1
-        return exclusao
-    
->>>>>>> Stashed changes

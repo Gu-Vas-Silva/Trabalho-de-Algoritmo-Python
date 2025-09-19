@@ -1,8 +1,5 @@
-<<<<<<< Updated upstream
 import json
-=======
-from main.ArvoreBinaria import ArvoreBinaria
->>>>>>> Stashed changes
+
 class Aluno:
     cursos_dict = {}
     cidades_dict = {}
@@ -41,13 +38,5 @@ class Aluno:
     def from_dict(dados: dict):
         return Aluno(**dados)
 
-<<<<<<< Updated upstream
-=======
-indeceAluno = Arvore()
-
-aluno1 = Aluno(1, "Eduardo", 1, 1)
-indeceAluno.inserir(aluno1.cod_aluno, aluno1)
-indeceAluno.buscarCod()
->>>>>>> Stashed changes
 
 

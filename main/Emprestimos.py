@@ -1,6 +1,7 @@
 from datetime import date
 
 class Emprestimo:
+    livro_dict = {}
     def __init__(self, cod_emprestimo: str, cod_livro: str, cod_aluno: str,
                  data_emprestimo: date, data_devolucao: date, devolvido: bool = False):
         self.cod_emprestimo = cod_emprestimo
@@ -9,7 +10,7 @@ class Emprestimo:
         self.data_emprestimo = data_emprestimo
         self.data_devolucao = data_devolucao
         self.devolvido = devolvido
-
+ 
     def __str__(self):
         status = "Devolvido" if self.devolvido else "Pendente"
         return (f"Emprestimo(cod_emprestimo='{self.cod_emprestimo}', cod_livro='{self.cod_livro}', "
@@ -19,6 +20,18 @@ class Emprestimo:
     def marcar_como_devolvido(self):
         self.devolvido = True
     
+    def livro_disponivel(self):
+        livro = self.livro_dict.get(self.cod_livro)
+        if livro.disponibilidade is True:
+             return True
+        else:
+            return False
+        
+    def categoria_livro(self):
+        livro = self.livro_dict.get(self.cod_livro)
+        if livro.titulo :
+            return f'{livro.titulo}, {livro.descricao_categorias()}'
+
     def to_dict(self):
         return self.__dict__
 
