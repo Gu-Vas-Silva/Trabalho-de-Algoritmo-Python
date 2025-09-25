@@ -59,12 +59,16 @@ emprestimos_existentes = carregar_todos(ARQ_EMPRESTIMO, Emprestimo)
 for i, emp in enumerate(emprestimos_existentes):
     indice.inserir(emp.cod_emprestimo, i)
     livro = carregar_todos(ARQ_LIVRO, Livro)
+    aluno = carregar_todos(ARQ_ALUNOS, Aluno)
     Emprestimo.livro_dict = {l.cod_livro: l for l in livro}
+    Emprestimo.aluno_dict = {a.codAluno: a for a in aluno}
     if emp.livro_disponivel() is True :
         print ('Livro disponivel.')
         print(emp.categoria_livro())
     else:
-        print('Livro Indisponivel.')
+        print('Livro indisponivel.')
+    print (emp.aluno_emprestimo())
+    print (emp.emprestimo_livro())
 
 
 #cod_exclusao = 4

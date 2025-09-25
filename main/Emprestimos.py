@@ -1,7 +1,8 @@
-from datetime import date
+from datetime import date, timedelta
 
 class Emprestimo:
     livro_dict = {}
+    aluno_dict = {}
     def __init__(self, cod_emprestimo: str, cod_livro: str, cod_aluno: str,
                  data_emprestimo: date, data_devolucao: date, devolvido: bool = False):
         self.cod_emprestimo = cod_emprestimo
@@ -15,7 +16,7 @@ class Emprestimo:
         status = "Devolvido" if self.devolvido else "Pendente"
         return (f"Emprestimo(cod_emprestimo='{self.cod_emprestimo}', cod_livro='{self.cod_livro}', "
                 f"cod_aluno='{self.cod_aluno}', data_emprestimo={self.data_emprestimo}, "
-                f"data_devolucao={self.data_devolucao}, status='{status}')")
+                f"data_devolucao={self.data_devolucao}, status='{status}')")    
 
     def marcar_como_devolvido(self):
         self.devolvido = True
@@ -26,11 +27,27 @@ class Emprestimo:
              return True
         else:
             return False
-        
+
+    def emprestimo_livro(self):
+        livro = self.livro_dict.get(self.cod_livro)
+        if self.livro_disponivel() is True:
+            self.data_emprestimo = date.today()
+            self.data_devolucao = self.data_emprestimo + timedelta(days = 7)
+            livro.disponibilidade = False
+            self.devolvido = 'Não'
+            return f"{self.devolvido}, emprestado"
+        return "livro não disponivel para emprestimo"
+
     def categoria_livro(self):
         livro = self.livro_dict.get(self.cod_livro)
         if livro.titulo :
             return f'{livro.titulo}, {livro.descricao_categorias()}'
+    
+    def aluno_emprestimo(self):
+        aluno = self.aluno_dict.get(self.cod_aluno)
+        if aluno.codAluno:
+            return f"{aluno.nome}, {aluno.cidade_descricao()}"
+        return "aluno nao encontrado"
 
     def to_dict(self):
         return self.__dict__
