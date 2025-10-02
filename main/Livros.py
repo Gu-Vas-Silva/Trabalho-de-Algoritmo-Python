@@ -21,11 +21,9 @@ class Livro:
                 return "disponivel"
             return "indisponivel"
 
-    def devolver(self):
-        self.disponibilidade = True
+    def atualizar_disponibilidade(self, disponivel: bool):
+        self.disponibilidade = disponivel
 
-    def atualizar_titulo(self, novo_titulo: str):
-        self.titulo = novo_titulo
 
     def descricao_autores(self):
         autor = self.autores_dict.get(self.cod_autor)

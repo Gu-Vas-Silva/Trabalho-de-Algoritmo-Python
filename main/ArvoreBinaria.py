@@ -30,12 +30,13 @@ class Arvore:
     def ordem(self, no=None):
         if no is None:
             no = self.raiz
-        if no is not None:
-            if no.esquerda:
-                self.ordem(no.esquerda)
-                print(no.valor)
-            if no.direita:
-                self.ordem(no.direita)
+        if no is None:
+            return
+        if no.esquerda:
+            self.ordem(no.esquerda)
+        print(no.valor)  
+        if no.direita:
+            self.ordem(no.direita)
 
     def buscarCod(self, chave, no=None):
         if no is None:

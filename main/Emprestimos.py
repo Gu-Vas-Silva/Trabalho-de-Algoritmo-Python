@@ -1,10 +1,10 @@
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 
 class Emprestimo:
     livro_dict = {}
     aluno_dict = {}
     def __init__(self, cod_emprestimo: str, cod_livro: str, cod_aluno: str,
-                 data_emprestimo: date, data_devolucao: date, devolvido: bool = False):
+                 data_emprestimo, data_devolucao, devolvido: bool = False):
         self.cod_emprestimo = cod_emprestimo
         self.cod_livro = cod_livro
         self.cod_aluno = cod_aluno
@@ -30,8 +30,8 @@ class Emprestimo:
         if self.livro_disponivel() is True:
             self.data_emprestimo = date.today()
             self.data_devolucao = self.data_emprestimo + timedelta(days = 7)
-            livro.disponibilidade = False
-            self.devolvido = 'Não'
+            livro.atualizar_disponibilidade(False)
+            self.devolvido = False
             return f"{self.devolvido}, emprestado"
         return "livro não disponivel para emprestimo"
 
@@ -42,13 +42,12 @@ class Emprestimo:
         
     def livro_atrasado(self):
         livro = self.livro_dict.get(self.cod_livro)
-        if self.devolvido == 'Não':
+        if self.devolvido == False:
             if date.today() > self.data_devolucao:
                 return f"{livro.titulo}"
             
 
     def livros_por_periodo(self, data_inicial, data_final):
-         livro = self.livro_dict.get(self.cod_livro)
          if self.data_emprestimo >= data_inicial and self.data_emprestimo <=data_final:
              return True
          return False
@@ -65,8 +64,22 @@ class Emprestimo:
         return "aluno nao encontrado"
 
     def to_dict(self):
-        return self.__dict__
+        return {
+            "cod_emprestimo": self.cod_emprestimo,
+            "cod_livro": self.cod_livro,
+            "cod_aluno": self.cod_aluno,
+            "data_emprestimo": self.data_emprestimo.strftime("%d/%m/%Y"),
+            "data_devolucao": self.data_devolucao.strftime("%d/%m/%Y"),
+            "devolvido": self.devolvido
+        }
 
-    @staticmethod
-    def from_dict(dados: dict):
-        return Emprestimo(**dados)
+    @classmethod
+    def from_dict(cls, dados: dict):
+        return cls(
+        cod_emprestimo=dados["cod_emprestimo"],
+        cod_livro=dados["cod_livro"],
+        cod_aluno=dados["cod_aluno"],
+        data_emprestimo=datetime.strptime(dados["data_emprestimo"], "%d/%m/%Y").date(),
+        data_devolucao=datetime.strptime(dados["data_devolucao"], "%d/%m/%Y").date(),
+        devolvido=dados["devolvido"]
+    )

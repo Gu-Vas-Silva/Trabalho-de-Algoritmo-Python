@@ -1,3 +1,2 @@
-{"cod_emprestimo": 1, "cod_livro": 1, "cod_aluno": 1, "data_emprestimo": "2025-09-01", "data_devolucao": "2025-09-15", "devolvido": false}
-{"cod_emprestimo": 2, "cod_livro": 2, "cod_aluno": 2, "data_emprestimo": "2025-09-05", "data_devolucao": "2025-09-20", "devolvido": false}
-
+{"cod_emprestimo": 1, "cod_livro": 1, "cod_aluno": 1, "data_emprestimo": "10/09/2025", "data_devolucao": "17/09/2025", "devolvido": false}
+{"cod_emprestimo": 2, "cod_livro": 2, "cod_aluno": 2, "data_emprestimo": "11/09/2025", "data_devolucao": "18/09/2025", "devolvido": false}

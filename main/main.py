@@ -17,47 +17,50 @@ ARQ_CURSO = "cursos.txt"
 ARQ_EMPRESTIMO = "emprestimos.txt"
 ARQ_LIVRO = "livros.txt"
 
-indice = Arvore()
+indice_autor = Arvore()
+indice_alunos = Arvore()
+indice_livros = Arvore()
+indice_emprestimo = Arvore()
 alunos_existentes = carregar_todos(ARQ_ALUNOS, Aluno)
+autores_existentes = carregar_todos(ARQ_AUTOR, Autor)
+categorias_existentes = carregar_todos(ARQ_CATEGORIA, Categoria)
+cidades_existentes = carregar_todos(ARQ_CIDADE, Cidade)
+cursos_existentes = carregar_todos(ARQ_CURSO, Curso)
+livros_existentes = carregar_todos(ARQ_LIVRO, Livro)
+emprestimos_existentes = carregar_todos(ARQ_EMPRESTIMO, Emprestimo)
+
 for i, aluno in enumerate(alunos_existentes):
-    indice.inserir(aluno.codAluno, i)
-    cursos = carregar_todos(ARQ_CURSO, Curso)
-    Aluno.cursos_dict = {c.cod_curso: c.descricao for c in cursos}
-    cidade = carregar_todos(ARQ_CIDADE, Cidade)
-    Aluno.cidades_dict = {c.cod_cidade: c for c in cidade}
+    indice_alunos.inserir(aluno.codAluno, aluno)
+    Aluno.cursos_dict = {c.cod_curso: c.descricao for c in cursos_existentes}
+    Aluno.cidades_dict = {c.cod_cidade: c for c in cidades_existentes}
     print(aluno.nome, aluno.curso_descricao(), aluno.cidade_descricao())
     
-autores_existentes = carregar_todos(ARQ_AUTOR, Autor)
 for i, autor in enumerate(autores_existentes):
-    indice.inserir(autor.cod_autor, i)
-    cidade = carregar_todos(ARQ_CIDADE, Cidade)
-    Autor.cidades_dict = {c.cod_cidade : c for c in cidade}
+    indice_autor.inserir(autor.cod_autor, autor)
+    Autor.cidades_dict = {c.cod_cidade : c for c in cidades_existentes}
     print(autor.nome, autor.descricao_cidade())
 
-categorias_existentes = carregar_todos(ARQ_CATEGORIA, Categoria)
-for i, categoria in enumerate(categorias_existentes):
-    indice.inserir(categoria.cod_categoria, i)
-
-cidades_existentes = carregar_todos(ARQ_CIDADE, Cidade)
-for i, cidade in enumerate(cidades_existentes):
-    indice.inserir(cidade.cod_cidade, i)
-
-cursos_existentes = carregar_todos(ARQ_CURSO, Curso)
-for i, curso in enumerate(cursos_existentes):
-    indice.inserir(curso.cod_curso, i)
-
-livros_existentes = carregar_todos(ARQ_LIVRO, Livro)
+contlivrod = 0
+contlivroe = 0
 for i, livro in enumerate(livros_existentes):
-    indice.inserir(livro.cod_livro, i)
-    autores = carregar_todos(ARQ_AUTOR, Autor)
-    categorias = carregar_todos(ARQ_CATEGORIA, Categoria)
-    Livro.autores_dict = {a.cod_autor: a for a in autores}
-    Livro.categorias_dict = {c.cod_categoria: c.descricao for c in categorias}
+    indice_livros.inserir(livro.cod_livro, livro)
+    Livro.autores_dict = {a.cod_autor: a for a in autores_existentes}
+    Livro.categorias_dict = {c.cod_categoria: c.descricao for c in categorias_existentes}
     print(livro.titulo, livro.descricao_autores(), livro.descricao_categorias(), livro.emprestar())
+    if livro.disponibilidade is True:
+        contlivrod += 1
+    else:
+        contlivroe += 1
+indice_livros.ordem()
+print(f"Quantidade de livros disponiveis: {contlivrod}")
+print(f"Quantidade de livros emprestados: {contlivroe}")
 
-emprestimos_existentes = carregar_todos(ARQ_EMPRESTIMO, Emprestimo)
+
+cont = 0
+data_i = datetime.strptime("09/09/2025", "%d/%m/%Y").date()
+data_f = datetime.strptime("12/09/2025", "%d/%m/%Y").date()
 for i, emp in enumerate(emprestimos_existentes):
-    indice.inserir(emp.cod_emprestimo, i)
+    indice_emprestimo.inserir(emp.cod_emprestimo, emp)
     livro = carregar_todos(ARQ_LIVRO, Livro)
     aluno = carregar_todos(ARQ_ALUNOS, Aluno)
     Emprestimo.livro_dict = {l.cod_livro: l for l in livro}
@@ -71,22 +74,16 @@ for i, emp in enumerate(emprestimos_existentes):
     print (emp.emprestimo_livro())
     print (emp.livros_emprestados())
     print (emp.livro_atrasado())
-    cont = 0
-    data_i = input("Digite a data inicial (dd/mm/aaaa): ")
-    data_f = input("Digite a data final (dd/mm/aaaa): ")
-    data_i = datetime.strptime(data_i, "%d/%m/%Y").date()
-    data_f = datetime.strptime(data_f, "%d/%m/%Y").date()
     if emp.livros_por_periodo(data_i, data_f):
         cont+=1
     print(f"quantidade dentro do periodo: {cont}")
 
-
-#cod_exclusao = 4
+#cod_exclusao = 1
 #linha = indice.buscarCod(cod_exclusao)
 
-#excluir_por_posicao(ARQ_ALUNOS, linha)
+#excluir_por_posicao(ARQ_EMPRESTIMO, linha)
 
-#indice.reconstruir(ARQ_ALUNOS, Aluno, carregar_todos)
+#indice.reconstruir(ARQ_EMPRESTIMO, Emprestimo, carregar_todos)
 
 #indice.ordem()
 
