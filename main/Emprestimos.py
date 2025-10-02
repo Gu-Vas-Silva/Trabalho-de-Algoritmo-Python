@@ -17,9 +17,6 @@ class Emprestimo:
         return (f"Emprestimo(cod_emprestimo='{self.cod_emprestimo}', cod_livro='{self.cod_livro}', "
                 f"cod_aluno='{self.cod_aluno}', data_emprestimo={self.data_emprestimo}, "
                 f"data_devolucao={self.data_devolucao}, status='{status}')")    
-
-    def marcar_como_devolvido(self):
-        self.devolvido = True
     
     def livro_disponivel(self):
         livro = self.livro_dict.get(self.cod_livro)
@@ -38,6 +35,24 @@ class Emprestimo:
             return f"{self.devolvido}, emprestado"
         return "livro não disponivel para emprestimo"
 
+    def livros_emprestados(self):
+        livro = self.livro_dict.get(self.cod_livro)
+        if self.livro_disponivel() is False:
+            return f"{livro.titulo}"
+        
+    def livro_atrasado(self):
+        livro = self.livro_dict.get(self.cod_livro)
+        if self.devolvido == 'Não':
+            if date.today() > self.data_devolucao:
+                return f"{livro.titulo}"
+            
+
+    def livros_por_periodo(self, data_inicial, data_final):
+         livro = self.livro_dict.get(self.cod_livro)
+         if self.data_emprestimo >= data_inicial and self.data_emprestimo <=data_final:
+             return True
+         return False
+             
     def categoria_livro(self):
         livro = self.livro_dict.get(self.cod_livro)
         if livro.titulo :

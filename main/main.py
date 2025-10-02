@@ -7,7 +7,7 @@ from Cursos import Curso
 from Emprestimos import Emprestimo
 from Livros import Livro
 from dados import salvar_objeto, buscar_por_posicao, carregar_todos, excluir_por_posicao
-from datetime import date
+from datetime import datetime
 
 ARQ_ALUNOS = "alunos.txt"
 ARQ_AUTOR = "autores.txt"
@@ -69,6 +69,16 @@ for i, emp in enumerate(emprestimos_existentes):
         print('Livro indisponivel.')
     print (emp.aluno_emprestimo())
     print (emp.emprestimo_livro())
+    print (emp.livros_emprestados())
+    print (emp.livro_atrasado())
+    cont = 0
+    data_i = input("Digite a data inicial (dd/mm/aaaa): ")
+    data_f = input("Digite a data final (dd/mm/aaaa): ")
+    data_i = datetime.strptime(data_i, "%d/%m/%Y").date()
+    data_f = datetime.strptime(data_f, "%d/%m/%Y").date()
+    if emp.livros_por_periodo(data_i, data_f):
+        cont+=1
+    print(f"quantidade dentro do periodo: {cont}")
 
 
 #cod_exclusao = 4
