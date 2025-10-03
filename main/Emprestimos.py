@@ -25,16 +25,6 @@ class Emprestimo:
         else:
             return False
 
-    def emprestimo_livro(self):
-        livro = self.livro_dict.get(self.cod_livro)
-        if self.livro_disponivel() is True:
-            self.data_emprestimo = date.today()
-            self.data_devolucao = self.data_emprestimo + timedelta(days = 7)
-            livro.atualizar_disponibilidade(False)
-            self.devolvido = False
-            return f"{self.devolvido}, emprestado"
-        return "livro não disponivel para emprestimo"
-
     def livros_emprestados(self):
         livro = self.livro_dict.get(self.cod_livro)
         if self.livro_disponivel() is False:

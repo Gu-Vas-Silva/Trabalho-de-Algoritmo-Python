@@ -49,6 +49,34 @@ class Arvore:
             return self.buscarCod(chave, no.esquerda)
         else:
             return self.buscarCod(chave, no.direita)
+
+    def excluir(self, chave, no=None):
+        if no is None:
+            no = self.raiz
+        if no is None:
+            return None
+        if chave < no.chave:
+            no.esquerda = self.excluir(chave, no.esquerda)
+        elif chave > no.chave:
+            no.direita = self.excluir(chave, no.direita)
+        else:
+            if no.esquerda is None and no.direita is None:
+                return None
+            elif no.esquerda is None:
+                return no.direita
+            elif no.direita is None:
+                return no.esquerda
+            else:
+                sucessor = self._minimo(no.direita)
+                no.chave, no.valor = sucessor.chave, sucessor.valor
+                no.direita = self.excluir(sucessor.chave, no.direita)
+        return no
+    
+    def _minimo(self, no):
+        atual = no
+        while atual.esquerda is not None:
+            atual = atual.esquerda
+        return atual
     
     def reconstruir(self, arquivo, classe, carregar_todos_func):
         self.raiz = None 

@@ -16,11 +16,6 @@ class Livro:
                 f"cod_autor='{self.cod_autor}', cod_categoria='{self.cod_categoria}', "
                 f"ano_publicacao={self.ano_publicacao}, disponibilidade='{status}')")
 
-    def emprestar(self):
-            if self.disponibilidade is True:
-                return "disponivel"
-            return "indisponivel"
-
     def atualizar_disponibilidade(self, disponivel: bool):
         self.disponibilidade = disponivel
 
