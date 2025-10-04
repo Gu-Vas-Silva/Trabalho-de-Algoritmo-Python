@@ -46,8 +46,13 @@ class Arvore:
         if chave == no.chave:
             return no.valor
         elif chave < no.chave:
-            return self.buscarCod(chave, no.esquerda)
+            if no.esquerda:
+                return self.buscarCod(chave, no.esquerda)
+            else:
+                return None
         else:
+            if no.direita is None:
+                return None
             return self.buscarCod(chave, no.direita)
 
     def excluir(self, chave, no=None):

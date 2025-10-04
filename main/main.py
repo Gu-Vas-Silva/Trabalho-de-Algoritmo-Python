@@ -328,6 +328,78 @@ def excluir_curso():
     else:
         print("Curso não encontrado.")
 
+def devolver_livro():
+    cod_emprestimo = int(input("Código do empréstimo para devolução: "))
+    emprestimo = indice_emprestimo.buscarCod(cod_emprestimo)
+    if emprestimo:
+        livro = indice_livros.buscarCod(emprestimo.cod_livro)
+        if livro:
+            livro.atualizar_disponibilidade(True)
+            emprestimo.atualizar_devolucao(True)
+            print(f"Livro '{livro.titulo}' devolvido com sucesso.")
+        else:
+            print("Livro associado ao empréstimo não encontrado.")
+    else:
+        print("Empréstimo não encontrado.")
+
+def consultar_livros_atrasados():
+    print("Livros atrasados:")
+    cont = 0
+    for emprestimo in emprestimos_existentes:
+        livro_atrasado = emprestimo.livro_atrasado()
+        if livro_atrasado:
+            print(f"- {livro_atrasado}")
+            cont += 1
+    if cont == 0:
+        print("Nenhum livro atrasado.")
+            
+
+def consultar_livros_emprestados():
+    print("Livros emprestados:")
+    cont = 0
+    for emprestimo in emprestimos_existentes:
+        if not emprestimo.devolvido:
+            livro = indice_livros.buscarCod(emprestimo.cod_livro)
+            if livro:
+                print(f"- {livro.titulo}")
+                cont += 1
+    if cont == 0:
+        print("Nenhum livro emprestado.")
+
+def quantidade_emprestimos_periodo():
+    data_inicial_str = input("Data inicial (dd/mm/aaaa): ")
+    data_final_str = input("Data final (dd/mm/aaaa): ")
+    try:
+        data_inicial = datetime.strptime(data_inicial_str, "%d/%m/%Y").date()
+        data_final = datetime.strptime(data_final_str, "%d/%m/%Y").date()
+    except ValueError:
+        print("Formato de data inválido. Use dd/mm/aaaa.")
+        return
+    if data_inicial > data_final:
+        print("Data inicial não pode ser maior que a data final.")
+        return
+    cont = 0
+    for emprestimo in emprestimos_existentes:
+        if emprestimo.livros_por_periodo(data_inicial, data_final):
+            cont += 1
+    print(f"Quantidade de empréstimos no período: {cont}")
+
+def mostrar_livros_ordem():
+    print("Livros disponíveis:")
+    indice = Arvore()
+    cont_emp = 0
+    cont_disp = 0
+    for livro in livros_existentes:
+        livros_ordem = livro.mostrar_livros()
+        indice.inser(livros_ordem, livros_ordem)
+        indice.ordem()
+        if livro.disponibilidade:
+            cont_disp += 1
+        else:
+            cont_emp += 1
+    print(f"Total de livros disponíveis: {cont_disp}")
+    print(f"Total de livros emprestados: {cont_emp}")
+
 def menu():
     while True:
         print("\nMenu Principal")
@@ -335,7 +407,11 @@ def menu():
         print("1. Inserir algum objeto")
         print("2. Consultar algum objeto por código")
         print("3. Excluir algum objeto por código")
-        print("4. Sair")
+        print("4. Devolver livro")
+        print("5. Consultar livros atrasados")
+        print("6. Consultar quantidade de livros emprestados por periodo")
+        print("7. Consultar livros em ordem de código")
+        print("8. Sair")
 
         escolha = input("Escolha uma opção: ")
 
@@ -407,11 +483,17 @@ def menu():
                 elif escolha4 == '7': excluir_emprestimo()
                 elif escolha4 == '8': break
                 else: print("Opção inválida.")
-
         elif escolha == '4':
+            devolver_livro()
+        elif escolha == '5':
+            consultar_livros_atrasados()
+        elif escolha == '6':
+            quantidade_emprestimos_periodo()
+        elif escolha == '7':
+            mostrar_livros_ordem()
+        elif escolha == '8':
             print("Saindo do programa. Até mais!")
             break
-
         else:
             print("Opção inválida.")
 menu()

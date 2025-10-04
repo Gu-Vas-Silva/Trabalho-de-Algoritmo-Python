@@ -1,3 +1,4 @@
+from ArvoreBinaria import Arvore
 class Livro:
     autores_dict = {}
     categorias_dict = {}
@@ -19,6 +20,10 @@ class Livro:
     def atualizar_disponibilidade(self, disponivel: bool):
         self.disponibilidade = disponivel
 
+    def mostrar_livros(self):
+        autor = self.autores_dict.get(self.cod_autor)
+        categoria = self.categorias_dict.get(self.cod_categoria)
+        return [self.titulo, autor.nome, categoria.descricao, self.ano_publicacao, self.disponibilidade]
 
     def descricao_autores(self):
         autor = self.autores_dict.get(self.cod_autor)

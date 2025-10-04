@@ -17,18 +17,9 @@ class Emprestimo:
         return (f"Emprestimo(cod_emprestimo='{self.cod_emprestimo}', cod_livro='{self.cod_livro}', "
                 f"cod_aluno='{self.cod_aluno}', data_emprestimo={self.data_emprestimo}, "
                 f"data_devolucao={self.data_devolucao}, status='{status}')")    
-    
-    def livro_disponivel(self):
-        livro = self.livro_dict.get(self.cod_livro)
-        if livro.disponibilidade is True:
-             return True
-        else:
-            return False
 
-    def livros_emprestados(self):
-        livro = self.livro_dict.get(self.cod_livro)
-        if self.livro_disponivel() is False:
-            return f"{livro.titulo}"
+    def atualizar_devolucao(self, devolvido: bool):
+        self.devolvido = devolvido
         
     def livro_atrasado(self):
         livro = self.livro_dict.get(self.cod_livro)
