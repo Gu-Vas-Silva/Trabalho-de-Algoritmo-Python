@@ -8,6 +8,7 @@ from Emprestimos import Emprestimo
 from Livros import Livro
 from dados import salvar_objeto, carregar_todos, excluir_do_arquivo
 from datetime import datetime, date, timedelta
+import time
 
 ARQ_ALUNOS = "alunos.txt"
 ARQ_AUTOR = "autores.txt"
@@ -24,29 +25,50 @@ indice_categoria = Arvore()
 indice_cidade = Arvore()
 indice_emprestimo = Arvore()
 indice_curso = Arvore()
-alunos_existentes = carregar_todos(ARQ_ALUNOS, Aluno)
-for aluno in alunos_existentes:
-    indice_alunos.inserir(aluno.codAluno, aluno)
-autores_existentes = carregar_todos(ARQ_AUTOR, Autor)
-for autor in autores_existentes:
-    indice_autor.inserir(autor.cod_autor, autor)
-categorias_existentes = carregar_todos(ARQ_CATEGORIA, Categoria)
-for categoria in categorias_existentes:
-    indice_categoria.inserir(categoria.cod_categoria, categoria)
-cidades_existentes = carregar_todos(ARQ_CIDADE, Cidade)
-for cidade in cidades_existentes:
-    indice_cidade.inserir(cidade.cod_cidade, cidade)
-cursos_existentes = carregar_todos(ARQ_CURSO, Curso)
-for curso in cursos_existentes:
-    indice_curso.inserir(curso.cod_curso, curso)
-livros_existentes = carregar_todos(ARQ_LIVRO, Livro)
-for livro in livros_existentes:
-    indice_livros.inserir(livro.cod_livro, livro)
-emprestimos_existentes = carregar_todos(ARQ_EMPRESTIMO, Emprestimo)
-for emprestimo in emprestimos_existentes:
-    indice_emprestimo.inserir(emprestimo.cod_emprestimo, emprestimo)
+
+def carregar_arquivos(arquivo):
+    if arquivo == ARQ_ALUNOS:
+        alunos_existentes = carregar_todos(ARQ_ALUNOS, Aluno)
+        for aluno in alunos_existentes:
+            indice_alunos.inserir(aluno.codAluno, aluno)
+        return alunos_existentes
+    elif arquivo == ARQ_AUTOR:
+        autores_existentes = carregar_todos(ARQ_AUTOR, Autor)
+        for autor in autores_existentes:
+            indice_autor.inserir(autor.cod_autor, autor)
+        return autores_existentes
+    elif arquivo == ARQ_CATEGORIA:
+        categorias_existentes = carregar_todos(ARQ_CATEGORIA, Categoria)
+        for categoria in categorias_existentes:
+            indice_categoria.inserir(categoria.cod_categoria, categoria)
+        return categorias_existentes
+    elif arquivo == ARQ_CIDADE:
+        cidades_existentes = carregar_todos(ARQ_CIDADE, Cidade)
+        for cidade in cidades_existentes:
+            indice_cidade.inserir(cidade.cod_cidade, cidade)
+        return cidades_existentes
+    elif arquivo == ARQ_EMPRESTIMO:
+        emprestimos_existentes = carregar_todos(ARQ_EMPRESTIMO, Emprestimo)
+        for emprestimo in emprestimos_existentes:
+            indice_emprestimo.inserir(emprestimo.cod_emprestimo, emprestimo)
+        return emprestimos_existentes
+    elif arquivo == ARQ_CURSO:
+        cursos_existentes = carregar_todos(ARQ_CURSO, Curso)
+        for curso in cursos_existentes:
+            indice_curso.inserir(curso.cod_curso, curso)
+        return cursos_existentes
+    elif arquivo == ARQ_LIVRO:
+        livros_existentes = carregar_todos(ARQ_LIVRO, Livro)
+        for livro in livros_existentes:
+            indice_livros.inserir(livro.cod_livro, livro)
+        return livros_existentes
+    else: 
+        return "arquivo não encontrado"
 
 def inserir_aluno():
+    carregar_arquivos(ARQ_ALUNOS)
+    carregar_arquivos(ARQ_CURSO)
+    carregar_arquivos(ARQ_CIDADE)
     nome = input("Nome do aluno: ")
     codAluno = int(input("Código do aluno: "))
     if indice_alunos.buscarCod(codAluno):
@@ -66,6 +88,8 @@ def inserir_aluno():
     print("Aluno inserido com sucesso!")
 
 def inserir_autor():
+    carregar_arquivos(ARQ_AUTOR)
+    carregar_arquivos(ARQ_CIDADE)
     nome = input("Nome do autor: ")
     cod_autor = int(input("Código do autor: "))
     if not indice_autor.buscarCod(cod_autor):
@@ -81,6 +105,7 @@ def inserir_autor():
     print("Autor inserido com sucesso!")
 
 def inserir_categoria():
+    carregar_arquivos(ARQ_CATEGORIA)
     descricao = input("Descrição da categoria: ")
     cod_categoria = int(input("Código da categoria: "))
     if not indice_categoria.buscarCod(cod_categoria):
@@ -92,6 +117,7 @@ def inserir_categoria():
     print("Categoria inserida com sucesso!")
 
 def inserir_cidade():
+    carregar_arquivos(ARQ_CIDADE)
     nome = input("Nome da cidade: ")
     estado = int(input("Estado da cidade: "))
     cod_cidade = int(input("Código da cidade: "))
@@ -104,6 +130,7 @@ def inserir_cidade():
     print("Cidade inserida com sucesso!")
 
 def inserir_curso():
+    carregar_arquivos(ARQ_CURSO)
     descricao = input("Descrição do curso: ")
     cod_curso = int(input("Código do curso: "))
     if not indice_curso.buscarCod(cod_curso):
@@ -115,9 +142,11 @@ def inserir_curso():
     print("Curso inserido com sucesso!")
 
 def inserir_livro():
+    carregar_arquivos(ARQ_AUTOR)
+    carregar_arquivos(ARQ_CATEGORIA)
+    carregar_arquivos(ARQ_LIVRO)
     titulo = input("Título do livro: ")
     cod_livro = int(input("Código do livro: "))
-    livro = Livro
     if indice_livros.buscarCod(cod_livro):
         print("Código do livro já existe. Tente novamente.")
         return
@@ -125,23 +154,26 @@ def inserir_livro():
     if not indice_autor.buscarCod(cod_autor):
         print("Código do autor não encontrado. Tente novamente.")
         return
-    else:
-        print(livro.descricao_autores())
     cod_categoria = int(input("Código da categoria: "))
     if not indice_categoria.buscarCod(cod_categoria):
         print("Código da categoria não encontrado. Tente novamente.")
         return
-    else:
-        print(livro.descricao_categorias())
     ano_publicacao = int(input("Ano de publicação: "))
     novo_livro = Livro(cod_livro, titulo, cod_autor, cod_categoria, ano_publicacao)
     salvar_objeto(novo_livro, ARQ_LIVRO)
-    indice_livros.inserir(novo_livro.cod_livro, novo_livro) 
+    indice_livros.inserir(novo_livro.cod_livro, novo_livro)
+    Livro.autores_dict = {a.cod_autor: a for a in carregar_arquivos(ARQ_AUTOR)}
+    Livro.categorias_dict = {c.cod_categoria: c for c in carregar_arquivos(ARQ_CATEGORIA)}
+    Autor.cidades_dict = {c.cod_cidade: c for c in carregar_arquivos(ARQ_CIDADE)}   
+    print("autor: ", novo_livro.descricao_autores())
+    print("categoria: ", novo_livro.descricao_categorias())
     print("Livro inserido com sucesso!")
 
 def inserir_emprestimo():
+    carregar_arquivos(ARQ_EMPRESTIMO)
+    carregar_arquivos(ARQ_LIVRO)
+    carregar_arquivos(ARQ_ALUNOS)
     cod_emprestimo = int(input("Código do empréstimo: "))
-    emp = Emprestimo
     if indice_emprestimo.buscarCod(cod_emprestimo):
         print("Código do empréstimo já existe. Tente novamente.")
         return
@@ -155,27 +187,32 @@ def inserir_emprestimo():
             print("Livro indisponível para empréstimo. Tente outro livro.")
             return
         else:
-            print(emp.categoria_livro())
             codAluno = int(input("Código do aluno: "))
             if not indice_alunos.buscarCod(codAluno):
                 print("Código do aluno não encontrado. Tente novamente.")
-                return
-            else:
-                print(emp.aluno_emprestimo())
+                return       
             data_emprestimo = date.today()
             data_devolucao = data_emprestimo + timedelta(days=7)
             novo_emprestimo = Emprestimo(cod_emprestimo, cod_livro, codAluno, data_emprestimo, data_devolucao)
             salvar_objeto(novo_emprestimo, ARQ_EMPRESTIMO)
+            Emprestimo.livro_dict = {l.cod_livro: l for l in carregar_arquivos(ARQ_LIVRO)}
+            Emprestimo.aluno_dict = {a.codAluno: a for a in carregar_arquivos(ARQ_ALUNOS)}
+            Aluno.cidades_dict = {c.cod_cidade: c for c in carregar_arquivos(ARQ_CIDADE)}
+            print("aluno: ", novo_emprestimo.aluno_emprestimo())
+            print("categoria: ", novo_emprestimo.categoria_livro())
             indice_emprestimo.inserir(novo_emprestimo.cod_emprestimo, novo_emprestimo)
             print("Empréstimo inserido com sucesso!")
             livro.atualizar_disponibilidade(False)
 
 def consultar_aluno():
+    carregar_arquivos(ARQ_ALUNOS)
+    curso = carregar_arquivos(ARQ_CURSO)
+    cidade = carregar_arquivos(ARQ_CIDADE)
     codAluno = int(input("Código do aluno a consultar: "))
     aluno = indice_alunos.buscarCod(codAluno)
     if aluno:
-        Aluno.cursos_dict = {c.cod_curso: c.descricao for c in cursos_existentes}
-        Aluno.cidades_dict = {c.cod_cidade: c for c in cidades_existentes}
+        Aluno.cursos_dict = {c.cod_curso: c.descricao for c in curso}
+        Aluno.cidades_dict = {c.cod_cidade: c for c in cidade}
         print(aluno.nome, aluno.curso_descricao(), aluno.cidade_descricao())
     else:
         print("Aluno não encontrado.")
@@ -183,10 +220,12 @@ def consultar_aluno():
         indice_alunos.ordem()
 
 def consultar_autor():
+    carregar_arquivos(ARQ_AUTOR)
+    cidade = carregar_arquivos(ARQ_CIDADE)
     cod_autor = int(input("Código do autor a consultar: "))
     autor = indice_autor.buscarCod(cod_autor)
     if autor:
-        Autor.cidades_dict = {c.cod_cidade : c for c in cidades_existentes}
+        Autor.cidades_dict = {c.cod_cidade : c for c in cidade}
         print(f"{autor.nome}, {autor.descricao_cidade()}")
     else:
         print("Autor não encontrado.")
@@ -194,11 +233,14 @@ def consultar_autor():
         indice_autor.ordem()
 
 def consultar_livro():
+    carregar_arquivos(ARQ_LIVRO)
     cod_livro = int(input("Código do livro a consultar: "))
+    autor = carregar_arquivos(ARQ_AUTOR)
+    categoria = carregar_arquivos(ARQ_CATEGORIA)
     livro = indice_livros.buscarCod(cod_livro)
     if livro:
-            Livro.autores_dict = {a.cod_autor: a for a in autores_existentes}
-            Livro.categorias_dict = {c.cod_categoria: c.descricao for c in categorias_existentes}
+            Livro.autores_dict = {a.cod_autor: a for a in autor}
+            Livro.categorias_dict = {c.cod_categoria: c.descricao for c in categoria}
             print(livro.titulo, livro.descricao_autores(), livro.descricao_categorias(), livro.disponibilidade)
     else:
         print("Livro não encontrado.")
@@ -206,11 +248,12 @@ def consultar_livro():
         indice_livros.ordem()
 
 def consultar_emprestimo():
+    carregar_arquivos(ARQ_EMPRESTIMO)
     cod_emprestimo = int(input("Código do empréstimo a consultar: "))
     emprestimo = indice_emprestimo.buscarCod(cod_emprestimo)
     if emprestimo:
-        livro = carregar_todos(ARQ_LIVRO, Livro)
-        aluno = carregar_todos(ARQ_ALUNOS, Aluno)
+        livro = carregar_arquivos(ARQ_LIVRO)
+        aluno = carregar_arquivos(ARQ_ALUNOS)
         Emprestimo.livro_dict = {l.cod_livro: l for l in livro}
         Emprestimo.aluno_dict = {a.codAluno: a for a in aluno}
         print(emprestimo)
@@ -222,6 +265,7 @@ def consultar_emprestimo():
         indice_emprestimo.ordem()
 
 def consultar_categoria():
+    carregar_arquivos(ARQ_CATEGORIA)
     cod_categoria = int(input("Código da categoria a consultar: "))
     categoria = indice_categoria.buscarCod(cod_categoria)
     if categoria:
@@ -232,6 +276,7 @@ def consultar_categoria():
         indice_categoria.ordem()
 
 def consultar_cidade():
+    carregar_arquivos(ARQ_CIDADE)
     cod_cidade = int(input("Código da cidade a consultar: "))
     cidade = indice_cidade.buscarCod(cod_cidade)
     if cidade:
@@ -242,6 +287,7 @@ def consultar_cidade():
         indice_cidade.ordem()
 
 def consultar_curso():
+    carregar_arquivos(ARQ_CURSO)
     cod_curso = int(input("Código do curso a consultar: "))
     curso = indice_curso.buscarCod(cod_curso)
     if curso:
@@ -252,6 +298,7 @@ def consultar_curso():
         indice_curso.ordem()
 
 def excluir_aluno():
+    carregar_arquivos(ARQ_ALUNOS)
     codAluno = int(input("Código do aluno a excluir: "))
     aluno = indice_alunos.buscarCod(codAluno)
     if aluno:
@@ -263,6 +310,7 @@ def excluir_aluno():
         print("Aluno não encontrado.")
 
 def excluir_autor():
+    carregar_arquivos(ARQ_AUTOR)
     cod_autor = int(input("Código do autor a excluir: "))
     autor = indice_autor.buscarCod(cod_autor)
     if autor:
@@ -274,6 +322,7 @@ def excluir_autor():
         print("Autor não encontrado.")
 
 def excluir_livro():
+    carregar_arquivos(ARQ_LIVRO)
     cod_livro = int(input("Código do livro a excluir: "))
     livro = indice_livros.buscarCod(cod_livro)
     if livro:
@@ -285,6 +334,7 @@ def excluir_livro():
         print("Livro não encontrado.")
 
 def excluir_emprestimo():
+    carregar_arquivos(ARQ_EMPRESTIMO)
     cod_emprestimo = int(input("Código do empréstimo a excluir: "))
     emprestimo = indice_emprestimo.buscarCod(cod_emprestimo)
     if emprestimo:
@@ -296,6 +346,7 @@ def excluir_emprestimo():
         print("Empréstimo não encontrado.")
 
 def excluir_categoria():
+    carregar_arquivos(ARQ_CATEGORIA)
     cod_categoria = int(input("Código da categoria a excluir: "))
     categoria = indice_categoria.buscarCod(cod_categoria)
     if categoria:
@@ -307,6 +358,7 @@ def excluir_categoria():
         print("Categoria não encontrada.")
 
 def excluir_cidade():
+    carregar_arquivos(ARQ_CIDADE)
     cod_cidade = int(input("Código da cidade a excluir: "))
     cidade = indice_cidade.buscarCod(cod_cidade)
     if cidade:
@@ -318,6 +370,7 @@ def excluir_cidade():
         print("Cidade não encontrada.")
 
 def excluir_curso():
+    carregar_arquivos(ARQ_CURSO)
     cod_curso = int(input("Código do curso a excluir: "))
     curso = indice_curso.buscarCod(cod_curso)
     if curso:
@@ -329,6 +382,8 @@ def excluir_curso():
         print("Curso não encontrado.")
 
 def devolver_livro():
+    carregar_arquivos(ARQ_EMPRESTIMO)
+    carregar_arquivos(ARQ_LIVRO)
     cod_emprestimo = int(input("Código do empréstimo para devolução: "))
     emprestimo = indice_emprestimo.buscarCod(cod_emprestimo)
     if emprestimo:
@@ -345,7 +400,10 @@ def devolver_livro():
 def consultar_livros_atrasados():
     print("Livros atrasados:")
     cont = 0
+    emprestimos_existentes = carregar_arquivos(ARQ_EMPRESTIMO)
+    livro = carregar_arquivos(ARQ_LIVRO)
     for emprestimo in emprestimos_existentes:
+        emprestimo.livro_dict = {l.cod_livro: l for l in livro}
         livro_atrasado = emprestimo.livro_atrasado()
         if livro_atrasado:
             print(f"- {livro_atrasado}")
@@ -357,7 +415,10 @@ def consultar_livros_atrasados():
 def consultar_livros_emprestados():
     print("Livros emprestados:")
     cont = 0
+    emprestimos_existentes = carregar_arquivos(ARQ_EMPRESTIMO)
+    livro = carregar_arquivos(ARQ_LIVRO)
     for emprestimo in emprestimos_existentes:
+        emprestimo.livro_dict = {l.cod_livro: l for l in livro}
         if not emprestimo.devolvido:
             livro = indice_livros.buscarCod(emprestimo.cod_livro)
             if livro:
@@ -367,6 +428,7 @@ def consultar_livros_emprestados():
         print("Nenhum livro emprestado.")
 
 def quantidade_emprestimos_periodo():
+    emprestimos_existentes = carregar_arquivos(ARQ_EMPRESTIMO)
     data_inicial_str = input("Data inicial (dd/mm/aaaa): ")
     data_final_str = input("Data final (dd/mm/aaaa): ")
     try:
@@ -387,11 +449,16 @@ def quantidade_emprestimos_periodo():
 def mostrar_livros_ordem():
     print("Livros disponíveis:")
     indice = Arvore()
+    livros_existentes = carregar_arquivos(ARQ_LIVRO)
+    autores_existentes = carregar_arquivos(ARQ_AUTOR)
+    categorias_existentes = carregar_arquivos(ARQ_CATEGORIA)
     cont_emp = 0
     cont_disp = 0
     for livro in livros_existentes:
+        livro.autores_dict = {a.cod_autor: a for a in autores_existentes}
+        livro.categorias_dict = {c.cod_categoria: c for c in categorias_existentes}
         livros_ordem = livro.mostrar_livros()
-        indice.inser(livros_ordem, livros_ordem)
+        indice.inserir(livros_ordem, livros_ordem)
         indice.ordem()
         if livro.disponibilidade:
             cont_disp += 1
@@ -404,6 +471,7 @@ def menu():
     while True:
         print("\nMenu Principal")
         print("==============")
+        time.sleep(0.5)
         print("1. Inserir algum objeto")
         print("2. Consultar algum objeto por código")
         print("3. Excluir algum objeto por código")
@@ -414,7 +482,7 @@ def menu():
         print("8. Sair")
 
         escolha = input("Escolha uma opção: ")
-
+        time.sleep(1)
         if escolha == '1':
             while True:
                 print("\n--- Inserir ---")

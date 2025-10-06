@@ -1,2 +1,3 @@
 {"codAluno": 1, "nome": "Eduardo", "cod_curso": 1, "cod_cidade": 1}
 {"codAluno": 2, "nome": "João", "cod_curso": 1, "cod_cidade": 1}
+{"codAluno": 3, "nome": "Roberto", "cod_curso": 2, "cod_cidade": 2}

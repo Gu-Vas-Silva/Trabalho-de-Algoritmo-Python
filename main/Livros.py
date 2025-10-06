@@ -23,7 +23,7 @@ class Livro:
     def mostrar_livros(self):
         autor = self.autores_dict.get(self.cod_autor)
         categoria = self.categorias_dict.get(self.cod_categoria)
-        return [self.titulo, autor.nome, categoria.descricao, self.ano_publicacao, self.disponibilidade]
+        return [self.cod_livro, self.titulo, autor.nome, categoria.descricao, self.ano_publicacao, self.disponibilidade]
 
     def descricao_autores(self):
         autor = self.autores_dict.get(self.cod_autor)
