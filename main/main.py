@@ -458,12 +458,12 @@ def mostrar_livros_ordem():
         livro.autores_dict = {a.cod_autor: a for a in autores_existentes}
         livro.categorias_dict = {c.cod_categoria: c for c in categorias_existentes}
         livros_ordem = livro.mostrar_livros()
-        indice.inserir(livros_ordem, livros_ordem)
-        indice.ordem()
+        indice.inserir(livro.cod_livro, livros_ordem)
         if livro.disponibilidade:
             cont_disp += 1
         else:
             cont_emp += 1
+    indice.ordem()
     print(f"Total de livros disponíveis: {cont_disp}")
     print(f"Total de livros emprestados: {cont_emp}")
 
