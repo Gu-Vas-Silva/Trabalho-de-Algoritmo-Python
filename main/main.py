@@ -260,6 +260,7 @@ def consultar_emprestimo():
         Emprestimo.livro_dict = {l.cod_livro: l for l in livro}
         Emprestimo.aluno_dict = {a.codAluno: a for a in aluno}
         Aluno.cidades_dict = {c.cod_cidade: c for c in cidade}
+        Livro.categorias_dict = {c.cod_categoria: c.descricao for c in categoria}
         print(emprestimo)
         print(emprestimo.categoria_livro())
         print(emprestimo.aluno_emprestimo())
@@ -569,4 +570,5 @@ def menu():
         else:
             print("Opção inválida.")
 menu()
+
 
