@@ -238,9 +238,11 @@ def consultar_livro():
     autor = carregar_arquivos(ARQ_AUTOR)
     categoria = carregar_arquivos(ARQ_CATEGORIA)
     livro = indice_livros.buscarCod(cod_livro)
+    cidade = carregar_arquivos(ARQ_CIDADE)
     if livro:
             Livro.autores_dict = {a.cod_autor: a for a in autor}
             Livro.categorias_dict = {c.cod_categoria: c.descricao for c in categoria}
+            Autor.cidades_dict = {c.cod_cidade: c for c in cidade}
             print(livro.titulo, livro.descricao_autores(), livro.descricao_categorias(), livro.disponibilidade)
     else:
         print("Livro não encontrado.")
@@ -252,10 +254,12 @@ def consultar_emprestimo():
     cod_emprestimo = int(input("Código do empréstimo a consultar: "))
     emprestimo = indice_emprestimo.buscarCod(cod_emprestimo)
     if emprestimo:
+        cidade = carregar_arquivos(ARQ_CIDADE)
         livro = carregar_arquivos(ARQ_LIVRO)
         aluno = carregar_arquivos(ARQ_ALUNOS)
         Emprestimo.livro_dict = {l.cod_livro: l for l in livro}
         Emprestimo.aluno_dict = {a.codAluno: a for a in aluno}
+        Aluno.cidades_dict = {c.cod_cidade: c for c in cidade}
         print(emprestimo)
         print(emprestimo.categoria_livro())
         print(emprestimo.aluno_emprestimo())
@@ -565,3 +569,4 @@ def menu():
         else:
             print("Opção inválida.")
 menu()
+
