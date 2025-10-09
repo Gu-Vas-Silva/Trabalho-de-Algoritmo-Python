@@ -1,2 +1,3 @@
 {"cod_cidade": 1, "descricao": "São Paulo", "estado": "SP"}
 {"cod_cidade": 2, "descricao": "Rio de Janeiro", "estado": "RJ"}
+{"cod_cidade": 8, "descricao": "Moscou", "estado": "Russia"}

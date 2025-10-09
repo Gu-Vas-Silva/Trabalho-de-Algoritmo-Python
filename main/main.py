@@ -92,7 +92,7 @@ def inserir_autor():
     carregar_arquivos(ARQ_CIDADE)
     nome = input("Nome do autor: ")
     cod_autor = int(input("Código do autor: "))
-    if not indice_autor.buscarCod(cod_autor):
+    if indice_autor.buscarCod(cod_autor):
         print("Código do autor já existe. Tente novamente.")
         return
     cod_cidade = int(input("Código da cidade: "))
@@ -108,7 +108,7 @@ def inserir_categoria():
     carregar_arquivos(ARQ_CATEGORIA)
     descricao = input("Descrição da categoria: ")
     cod_categoria = int(input("Código da categoria: "))
-    if not indice_categoria.buscarCod(cod_categoria):
+    if indice_categoria.buscarCod(cod_categoria):
         print("Código da categoria já existe. Tente novamente.")
         return
     nova_categoria = Categoria(cod_categoria, descricao)
@@ -119,9 +119,9 @@ def inserir_categoria():
 def inserir_cidade():
     carregar_arquivos(ARQ_CIDADE)
     nome = input("Nome da cidade: ")
-    estado = int(input("Estado da cidade: "))
+    estado = input("Estado da cidade: ")
     cod_cidade = int(input("Código da cidade: "))
-    if not indice_cidade.buscarCod(cod_cidade):
+    if indice_cidade.buscarCod(cod_cidade):
         print("Código da cidade já existe. Tente novamente.")
         return
     nova_cidade = Cidade(cod_cidade, nome, estado)
@@ -133,7 +133,7 @@ def inserir_curso():
     carregar_arquivos(ARQ_CURSO)
     descricao = input("Descrição do curso: ")
     cod_curso = int(input("Código do curso: "))
-    if not indice_curso.buscarCod(cod_curso):
+    if indice_curso.buscarCod(cod_curso):
         print("Código do curso já existe. Tente novamente.")
         return
     novo_curso = Curso(cod_curso, descricao)

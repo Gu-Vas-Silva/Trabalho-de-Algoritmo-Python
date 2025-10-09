@@ -1,3 +1,4 @@
 {"cod_categoria": 1, "descricao": "Romance"}
 {"cod_categoria": 2, "descricao": "Terror"}
 
+{"cod_categoria": 9, "descricao": "Suspense"}
